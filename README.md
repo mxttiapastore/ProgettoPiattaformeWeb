@@ -4,34 +4,24 @@ Progetto di un'app web per l'esame di Piattaforme software per applicazioni sul 
 
 ## Configurazione del database
 
-Le proprietà principali sono definite in `src/main/resources/application.yml`. L'applicazione attiva di default il profilo `dev-h2`, che utilizza un database H2 in memoria compatibile con PostgreSQL, così da poter avviare il progetto senza dipendenze esterne.
+L'applicazione è configurata per utilizzare PostgreSQL in ambiente di produzione. Per evitare l'errore di connessione `Connection to localhost:5432 refused` è necessario avviare un database PostgreSQL in ascolto sulla porta indicata oppure aggiornare le variabili d'ambiente con i dati corretti.
+
+Puoi avviare rapidamente un'istanza PostgreSQL locale con Docker Compose:
 
 ```bash
-./mvnw spring-boot:run
+docker compose up -d postgres
 ```
 
-L'H2 console è disponibile all'indirizzo <http://localhost:8080/h2-console>.
+Le credenziali di default sono:
 
-### Profili Spring disponibili
+- **Database**: `progettopiattaforme`
+- **Utente**: `postgres`
+- **Password**: `postgres`
 
-| Profilo                | Descrizione                                                                 | Come attivarlo                                                |
-|------------------------|-----------------------------------------------------------------------------|----------------------------------------------------------------|
-| *(default)* `dev-h2`   | Usa un database H2 in-memory compatibile con PostgreSQL per lo sviluppo.    | Nessuna azione necessaria: è attivo in automatico.             |
-| `postgres`             | Usa PostgreSQL reale con le credenziali/URL configurati.                    | `SPRING_PROFILES_ACTIVE=postgres` oppure `--spring.profiles.active=postgres` |
-
-### Utilizzare PostgreSQL
-
-Per evitare l'errore `FATALE: autenticazione con password fallita per l'utente "postgres"` assicurati di:
-
-1. Avviare un database PostgreSQL raggiungibile all'indirizzo `jdbc:postgresql://localhost:5432/progettopiattaforme` (ad esempio con `docker compose up -d postgres`).
-2. Attivare il profilo `postgres` (es. `SPRING_PROFILES_ACTIVE=postgres`).
-3. Impostare le variabili `DB_USERNAME`/`DB_PASSWORD` se il database usa credenziali diverse da `postgres/postgres`.
-4. Avviare l'applicazione Spring Boot.
-
-Esempio di avvio:
+In alternativa, per lo sviluppo locale puoi attivare il profilo `dev-h2`, che utilizza un database H2 in memoria e non richiede PostgreSQL avviato:
 
 ```bash
-SPRING_PROFILES_ACTIVE=postgres DB_PASSWORD=mia-password ./mvnw spring-boot:run
+./mvnw spring-boot:run -Dspring-boot.run.profiles=dev-h2
 ```
 
-Le stesse variabili possono essere configurate anche in IntelliJ IDEA (Run/Debug configuration) o come variabili d'ambiente di sistema.
+Le proprietà di configurazione si trovano in `src/main/resources/application.yml`.
