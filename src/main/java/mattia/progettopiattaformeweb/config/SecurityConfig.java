@@ -39,9 +39,10 @@ public class SecurityConfig {
                 .authorizeHttpRequests(auth -> auth
                         // libera root, swagger e auth
                         .requestMatchers(HttpMethod.GET, "/").permitAll()
+
                         .requestMatchers("/api/auth/**",
                                 "/v3/api-docs/**", "/swagger-ui/**", "/swagger-ui.html",
-                                "/error" , "/css/**","/js/**","/images/**").permitAll()
+                                "/error" , "/css/**","/js/**","/images/**", "/api/componenti/**").permitAll()
                         .anyRequest().authenticated()
                 )
                 // mostri 401 quando manca/è invalido il token
