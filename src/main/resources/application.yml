@@ -2,7 +2,7 @@ spring:
   datasource:
     url: ${DB_URL:jdbc:postgresql://localhost:5432/progettopiattaforme}
     username: ${DB_USERNAME:postgres}
-    password: ${DB_PASSWORD:postgres}
+    password: ${DB_PASSWORD:matia123+}
     driver-class-name: org.postgresql.Driver
     hikari:
       maximum-pool-size: 5
@@ -40,3 +40,13 @@ spring:
     console:
       enabled: true
       path: /h2-console
+
+#sezione sicurezza e autenticazione con spring security
+
+security:
+  jwt:
+    secret: "avoltesonocosisolo"
+    expiration: 3600
+
+
+
