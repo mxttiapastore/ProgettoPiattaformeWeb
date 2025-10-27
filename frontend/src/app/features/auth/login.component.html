@@ -1,10 +1,20 @@
-<!-- login.component.html -->
-<div class="login-container">
-  <h2>Login</h2>
-  <form [formGroup]="form" (ngSubmit)="login()">
-    <input formControlName="username" placeholder="Username">
-    <input type="password" formControlName="password" placeholder="Password">
-    <button type="submit">Accedi</button>
-  </form>
-  <p *ngIf="error" class="error">{{ error }}</p>
+<div class="login-wrap">
+  <div class="card">
+    <h1>Accedi</h1>
+
+    <form [formGroup]="form" (ngSubmit)="login()" novalidate>
+      <label>
+        <span>Username</span>
+        <input formControlName="username" autocomplete="username" />
+      </label>
+
+      <label>
+        <span>Password</span>
+        <input type="password" formControlName="password" autocomplete="current-password" />
+      </label>
+
+      <button type="submit" [disabled]="form.invalid">Entra</button>
+      <p class="error" *ngIf="error">{{ error }}</p>
+    </form>
+  </div>
 </div>

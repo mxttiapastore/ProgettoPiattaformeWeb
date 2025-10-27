@@ -7,17 +7,17 @@ import { AuthService } from '../../core/auth.service';
 
 @Component({
   selector: 'app-login',
-  standalone: true,                 // <-- MANCA NEL TUO: aggiungilo
+  standalone: true,
   templateUrl: './login.component.html',
-  imports: [ReactiveFormsModule, CommonModule], // NgIf nel template => CommonModule
+  imports: [ReactiveFormsModule, CommonModule],
   styleUrls: ['./login.component.css']
 })
 export class LoginComponent {
-  form!: FormGroup;                 // <-- dichiarazione senza usare fb qui
+  form!: FormGroup;          // dichiarazione senza usare fb qui
   error = '';
 
   constructor(private fb: FormBuilder, private auth: AuthService, private router: Router) {
-    // <-- inizializza QUI, dopo l'iniezione di fb
+    // inizializzo DOPO l'iniezione di fb -> niente TS2729
     this.form = this.fb.group({
       username: ['', Validators.required],
       password: ['', Validators.required]
@@ -28,7 +28,7 @@ export class LoginComponent {
     if (this.form.invalid) return;
     const { username, password } = this.form.value;
     this.auth.login(username!, password!).subscribe({
-      next: () => this.router.navigate(['/home']),   // assicurati che esista la rotta /home
+      next: () => this.router.navigate(['/home']),
       error: () => this.error = 'Credenziali errate'
     });
   }
