@@ -9,6 +9,8 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.List;
+
 @Service
 public class ComponenteService {
 
@@ -36,4 +38,8 @@ public class ComponenteService {
                 c.getFattoreForma(), c.getTipoMemoria(), c.getWattaggio()
         );
     }
+    public List<ComponenteDto> tutti() {
+        return repo.findAll().stream().map(this::toDto).toList();
+    }
+
 }

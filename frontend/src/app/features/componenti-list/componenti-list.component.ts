@@ -30,5 +30,6 @@ export class ComponentiListComponent implements OnInit {
       next: (r) => { this.data = r; this.loading = false; },
       error: () => { this.error = 'Errore nel caricamento'; this.loading = false; }
     });
+
   }
 }

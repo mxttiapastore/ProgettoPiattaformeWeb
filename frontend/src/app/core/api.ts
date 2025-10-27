@@ -6,7 +6,6 @@ import { Observable } from 'rxjs';
 export interface ComponenteDto {
   id: number;
   tipologia: string;
-  // aggiungi altri campi se il tuo DTO li espone
 }
 
 @Injectable({ providedIn: 'root' })
@@ -16,7 +15,7 @@ export class ApiService {
   constructor(private http: HttpClient) {}
 
   listComponenti(): Observable<ComponenteDto[]> {
-    return this.http.get<ComponenteDto[]>(`${this.base}/componenti`);
+    return this.http.get<ComponenteDto[]>(`${this.base}/componenti/tutti`);
   }
 
   // esempi per dopo:

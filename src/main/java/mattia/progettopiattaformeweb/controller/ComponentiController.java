@@ -8,6 +8,8 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @RestController
 @RequestMapping("/api/componenti")
 public class ComponentiController {
@@ -25,4 +27,9 @@ public class ComponentiController {
 
     @GetMapping("/{id}")
     public ComponenteDto dettaglio(@PathVariable Long id) { return servizio.dettaglio(id); }
+
+    @GetMapping("/tutti")
+    public List<ComponenteDto> tutti() {
+        return servizio.tutti();
+    }
 }
