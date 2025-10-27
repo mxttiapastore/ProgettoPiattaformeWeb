@@ -25,3 +25,20 @@ In alternativa, per lo sviluppo locale puoi attivare il profilo `dev-h2`, che ut
 ```
 
 Le proprietà di configurazione si trovano in `src/main/resources/application.yml`.
+
+## Avvio rapido
+
+```bash
+# backend (profili default)
+./mvnw spring-boot:run
+
+# frontend (da ./frontend)
+npm install
+npm run start
+```
+
+L'app Angular espone il dev server su [http://localhost:4200](http://localhost:4200) e inoltra le chiamate `*/api` verso il backend su porta `8080`.
+
+## Autenticazione e test
+
+L'applicazione supporta sia login sia registrazione. Un nuovo utente può essere creato dalla pagina di registrazione all'indirizzo `/register`; al termine della registrazione l'utente viene autenticato automaticamente e reindirizzato alla home. Le credenziali restano salvate nel browser finché il token JWT non scade o non viene eseguito il logout.

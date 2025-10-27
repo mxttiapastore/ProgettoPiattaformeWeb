@@ -1,4 +1,4 @@
-:host { display:block; }
+:host { display: block; }
 
 .auth-wrap {
   min-height: 100dvh;
@@ -13,8 +13,8 @@
   max-width: 380px;
   background: #fff;
   border-radius: 16px;
-  box-shadow: 0 10px 30px rgba(0,0,0,.08);
-  padding: 24px 22px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
+  padding: 26px 24px;
 }
 
 h1 {
@@ -24,14 +24,19 @@ h1 {
   text-align: center;
 }
 
-form { display: grid; gap: 12px; }
+form {
+  display: grid;
+  gap: 14px;
+}
 
-label { display: grid; gap: 6px; }
-label span { font-size: 13px; color: #555; }
+label {
+  display: grid;
+  gap: 6px;
+}
 
-.field-error {
-  color: #dc2626;
-  font-size: 12px;
+label span {
+  font-size: 13px;
+  color: #555;
 }
 
 input {
@@ -41,27 +46,47 @@ input {
   padding: 10px 12px;
   outline: none;
   font-size: 14px;
+  transition: border-color 0.2s ease, box-shadow 0.2s ease;
 }
-input:focus { border-color: #3b82f6; box-shadow: 0 0 0 3px rgba(59,130,246,.15); }
+
+input:focus {
+  border-color: #3b82f6;
+  box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.15);
+}
 
 button {
-  margin-top: 6px;
+  margin-top: 4px;
   width: 100%;
   border: 0;
   border-radius: 12px;
-  padding: 10px 14px;
+  padding: 11px 14px;
   font-weight: 600;
   cursor: pointer;
   background: #3b82f6;
   color: #fff;
-  transition: transform .05s ease, box-shadow .15s ease;
+  transition: transform 0.05s ease, box-shadow 0.15s ease, background 0.2s ease;
 }
-button:disabled { opacity: .6; cursor: not-allowed; }
-button:not(:disabled):hover { box-shadow: 0 8px 20px rgba(59,130,246,.25); }
-button:not(:disabled):active { transform: translateY(1px); }
+
+button:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+button:not(:disabled):hover {
+  box-shadow: 0 8px 20px rgba(59, 130, 246, 0.25);
+}
+
+button:not(:disabled):active {
+  transform: translateY(1px);
+}
+
+.field-error {
+  color: #dc2626;
+  font-size: 12px;
+}
 
 .error {
-  margin: 8px 0 0;
+  margin: 6px 0 0;
   color: #dc2626;
   font-size: 13px;
   text-align: center;

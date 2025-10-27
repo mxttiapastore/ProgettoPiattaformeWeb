@@ -36,6 +36,10 @@ public class JwtUtils {
                 .compact();
     }
 
+    public long getExpirationSeconds() {
+        return expirationSeconds;
+    }
+
     public String extractUsername(String token) {
         return Jwts.parserBuilder().setSigningKey(key()).build()
                 .parseClaimsJws(token).getBody().getSubject();
