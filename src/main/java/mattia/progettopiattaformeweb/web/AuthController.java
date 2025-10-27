@@ -26,8 +26,8 @@ public class AuthController {
 
     @PostMapping("/register")
     public ResponseEntity<JwtResponse> register(@Valid @RequestBody RegisterRequest req) {
-        authService.register(req);
-        return ResponseEntity.status(HttpStatus.CREATED).build();
+        JwtResponse jwtResponse = authService.register(req);
+        return ResponseEntity.ok(jwtResponse);
     }
 
     @PostMapping("/login")
@@ -37,6 +37,6 @@ public class AuthController {
         );
         UserDetails user = (UserDetails) auth.getPrincipal();
         String token = jwt.generateToken(user);
-        return ResponseEntity.ok(new JwtResponse(token, 3600));
+        return ResponseEntity.ok(new JwtResponse(token, jwt.getExpirationSeconds()));
     }
 }

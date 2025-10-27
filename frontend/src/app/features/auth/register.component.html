@@ -1,0 +1,42 @@
+<div class="auth-wrap">
+  <div class="card">
+    <h1>Crea il tuo account</h1>
+
+    <form [formGroup]="form" (ngSubmit)="register()" novalidate>
+      <label>
+        <span>Username</span>
+        <input formControlName="username" autocomplete="username" />
+        <small class="field-error" *ngIf="isInvalid('username')">
+          L'username è obbligatorio (min. 3 caratteri)
+        </small>
+      </label>
+
+      <label>
+        <span>Password</span>
+        <input type="password" formControlName="password" autocomplete="new-password" />
+        <small class="field-error" *ngIf="isInvalid('password')">
+          La password deve contenere almeno 8 caratteri
+        </small>
+      </label>
+
+      <label>
+        <span>Conferma password</span>
+        <input type="password" formControlName="confirmPassword" autocomplete="new-password" />
+        <small class="field-error" *ngIf="isInvalid('confirmPassword') && !form.hasError('mismatch')">
+          Conferma la password
+        </small>
+        <small class="field-error" *ngIf="form.hasError('mismatch') && form.get('confirmPassword')?.touched">
+          Le password non coincidono
+        </small>
+      </label>
+
+      <button type="submit" [disabled]="form.invalid || isSubmitting">
+        {{ isSubmitting ? 'Registrazione…' : 'Registrati' }}
+      </button>
+
+      <p class="error" *ngIf="error">{{ error }}</p>
+    </form>
+
+    <p class="link">Hai già un account? <a routerLink="/login">Accedi</a></p>
+  </div>
+</div>

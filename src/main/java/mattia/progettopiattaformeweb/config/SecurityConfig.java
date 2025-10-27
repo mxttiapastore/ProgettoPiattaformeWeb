@@ -37,12 +37,10 @@ public class SecurityConfig {
                 .cors(Customizer.withDefaults())
                 .sessionManagement(sm -> sm.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .authorizeHttpRequests(auth -> auth
-                        // libera root, swagger e auth
                         .requestMatchers(HttpMethod.GET, "/").permitAll()
-
-                        .requestMatchers("/api/auth/**",
-                                "/v3/api-docs/**", "/swagger-ui/**", "/swagger-ui.html",
-                                "/error" , "/css/**","/js/**","/images/**", "/api/componenti/**").permitAll()
+                        .requestMatchers(HttpMethod.POST, "/api/auth/login", "/api/auth/register").permitAll()
+                        .requestMatchers("/v3/api-docs/**", "/swagger-ui/**", "/swagger-ui.html",
+                                "/error", "/css/**", "/js/**", "/images/**").permitAll()
                         .anyRequest().authenticated()
                 )
                 // mostri 401 quando manca/è invalido il token

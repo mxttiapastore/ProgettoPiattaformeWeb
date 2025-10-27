@@ -1,4 +1,4 @@
-<div class="login-wrap">
+<div class="auth-wrap">
   <div class="card">
     <h1>Accedi</h1>
 
@@ -6,15 +6,25 @@
       <label>
         <span>Username</span>
         <input formControlName="username" autocomplete="username" />
+        <small class="field-error" *ngIf="isInvalid('username')">
+          Inserisci il tuo username
+        </small>
       </label>
 
       <label>
         <span>Password</span>
         <input type="password" formControlName="password" autocomplete="current-password" />
+        <small class="field-error" *ngIf="isInvalid('password')">
+          Inserisci la password
+        </small>
       </label>
 
-      <button type="submit" [disabled]="form.invalid">Entra</button>
+      <button type="submit" [disabled]="form.invalid || isSubmitting">
+        {{ isSubmitting ? 'Accesso…' : 'Entra' }}
+      </button>
       <p class="error" *ngIf="error">{{ error }}</p>
     </form>
+
+    <p class="link">Non hai un account? <a routerLink="/register">Registrati</a></p>
   </div>
 </div>
