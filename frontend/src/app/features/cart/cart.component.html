@@ -1,0 +1,40 @@
+<section class="cart">
+  <header>
+    <div>
+      <h1>Carrello</h1>
+      <p>Qui trovi tutti i componenti che hai aggiunto dal configuratore o dalle tue configurazioni salvate.</p>
+    </div>
+    <div class="actions">
+      <button (click)="aggiorna()">Aggiorna</button>
+      <button class="ghost" (click)="creaCarrello()" [disabled]="loading">Nuovo carrello</button>
+    </div>
+  </header>
+
+  <div class="alerts">
+    <p class="alert info" *ngIf="message">{{ message }}</p>
+    <p class="alert error" *ngIf="error">{{ error }}</p>
+    <p class="alert info" *ngIf="loading">Aggiornamento in corso…</p>
+  </div>
+
+  <div *ngIf="carrello && carrello.voci.length === 0" class="empty">
+    Il carrello è vuoto. Visita il <a routerLink="/builder">configuratore</a> per aggiungere componenti.
+  </div>
+
+  <div class="lista" *ngIf="carrello && carrello.voci.length">
+    <article class="item" *ngFor="let voce of carrello.voci">
+      <div>
+        <h2>{{ voce.nomeComponente }}</h2>
+        <p class="meta">Quantità: {{ voce.quantita }}</p>
+      </div>
+      <div class="prezzi">
+        <span>{{ voce.prezzoUnitario | number:'1.2-2' }} €</span>
+        <strong>{{ voce.subtotale | number:'1.2-2' }} €</strong>
+      </div>
+    </article>
+
+    <footer class="totale">
+      <span>Totale carrello</span>
+      <strong>{{ totale() | number:'1.2-2' }} €</strong>
+    </footer>
+  </div>
+</section>

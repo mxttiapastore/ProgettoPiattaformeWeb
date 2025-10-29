@@ -3,10 +3,12 @@ package mattia.progettopiattaformeweb.web;
 import mattia.progettopiattaformeweb.dto.*;
 import mattia.progettopiattaformeweb.security.JwtUtils;
 import mattia.progettopiattaformeweb.service.AuthService;
+import java.util.List;
 import jakarta.validation.Valid;
 import org.springframework.http.*;
 import org.springframework.security.authentication.*;
 import org.springframework.security.core.Authentication;
+import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.*;
 
@@ -37,6 +39,9 @@ public class AuthController {
         );
         UserDetails user = (UserDetails) auth.getPrincipal();
         String token = jwt.generateToken(user);
-        return ResponseEntity.ok(new JwtResponse(token, jwt.getExpirationSeconds()));
+        List<String> roles = user.getAuthorities().stream()
+                .map(GrantedAuthority::getAuthority)
+                .toList();
+        return ResponseEntity.ok(new JwtResponse(token, jwt.getExpirationSeconds(), user.getUsername(), roles));
     }
 }
