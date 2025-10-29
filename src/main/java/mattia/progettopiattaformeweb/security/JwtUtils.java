@@ -2,6 +2,7 @@ package mattia.progettopiattaformeweb.security;
 
 import io.jsonwebtoken.*;
 import io.jsonwebtoken.security.Keys;
+import lombok.Getter;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -18,6 +19,7 @@ public class JwtUtils {
     @Value("${security.jwt.secret}")
     private String secret;
 
+    @Getter
     @Value("${security.jwt.expiration}")
     private long expirationSeconds;
 
@@ -34,10 +36,6 @@ public class JwtUtils {
                 .setExpiration(Date.from(now.plusSeconds(expirationSeconds)))
                 .signWith(key(), SignatureAlgorithm.HS256)
                 .compact();
-    }
-
-    public long getExpirationSeconds() {
-        return expirationSeconds;
     }
 
     public String extractUsername(String token) {
