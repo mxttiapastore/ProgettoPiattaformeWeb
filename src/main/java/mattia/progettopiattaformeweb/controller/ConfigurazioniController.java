@@ -3,6 +3,7 @@ package mattia.progettopiattaformeweb.controller;
 import jakarta.validation.Valid;
 import mattia.progettopiattaformeweb.dto.*;
 import mattia.progettopiattaformeweb.service.ConfigurazioneService;
+import java.util.List;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
@@ -16,6 +17,11 @@ public class ConfigurazioniController {
     @PostMapping
     public ConfigurazioneDto crea(@Valid @RequestBody CreaConfigurazioneReq req) {
         return servizio.crea(req.nome());
+    }
+
+    @GetMapping
+    public List<ConfigurazioneDto> elenco() {
+        return servizio.elenco();
     }
 
     @GetMapping("/{id}")

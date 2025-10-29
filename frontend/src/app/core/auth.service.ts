@@ -2,10 +2,15 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { tap } from 'rxjs';
 
-type AuthResponse = { token: string; expiresIn: number };
+type AuthResponse = { token: string; expiresIn: number; username: string; roles: string[] };
 
 @Injectable({ providedIn: 'root' })
 export class AuthService {
+  private readonly TOKEN_KEY = 'token';
+  private readonly EXP_KEY = 'expiresAt';
+  private readonly USERNAME_KEY = 'username';
+  private readonly ROLES_KEY = 'roles';
+
   constructor(private http: HttpClient) {}
 
   login(username: string, password: string) {
@@ -25,12 +30,29 @@ export class AuthService {
   }
 
   get token() {
-    return localStorage.getItem('token');
+    return localStorage.getItem(this.TOKEN_KEY);
+  }
+
+  get username() {
+    return localStorage.getItem(this.USERNAME_KEY) || '';
+  }
+
+  get roles(): string[] {
+    const raw = localStorage.getItem(this.ROLES_KEY);
+    try {
+      return raw ? (JSON.parse(raw) as string[]) : [];
+    } catch {
+      return [];
+    }
+  }
+
+  hasRole(role: string): boolean {
+    return this.roles.includes(role);
   }
 
   isLoggedIn() {
     const token = this.token;
-    const expiresAtRaw = localStorage.getItem('expiresAt');
+    const expiresAtRaw = localStorage.getItem(this.EXP_KEY);
     const expiresAt = Number(expiresAtRaw || 0);
 
     if ((token && expiresAtRaw && Date.now() >= expiresAt) || (!token && expiresAtRaw)) {
@@ -42,8 +64,10 @@ export class AuthService {
   }
 
   private persist(res: AuthResponse) {
-    localStorage.setItem('token', res.token);
+    localStorage.setItem(this.TOKEN_KEY, res.token);
     const expiresAt = Date.now() + res.expiresIn * 1000;
-    localStorage.setItem('expiresAt', String(expiresAt));
+    localStorage.setItem(this.EXP_KEY, String(expiresAt));
+    localStorage.setItem(this.USERNAME_KEY, res.username);
+    localStorage.setItem(this.ROLES_KEY, JSON.stringify(res.roles));
   }
 }

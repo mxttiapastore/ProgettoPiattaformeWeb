@@ -1,1 +1,23 @@
-<router-outlet></router-outlet>
+@if (auth.isLoggedIn()) {
+  <div class="shell">
+    <nav class="topbar">
+      <a class="brand" routerLink="/">CraftYourPC</a>
+      <div class="links">
+        <a routerLink="/" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }">Home</a>
+        <a routerLink="/builder" routerLinkActive="active">Configuratore</a>
+        <a routerLink="/configurazioni" routerLinkActive="active">Configurazioni</a>
+        <a routerLink="/carrello" routerLinkActive="active">Carrello</a>
+        <a *ngIf="auth.hasRole('ROLE_ADMIN')" routerLink="/admin/componenti" routerLinkActive="active">Aggiungi componenti</a>
+      </div>
+      <div class="user">
+        <span class="name">{{ auth.username }}</span>
+        <button type="button" (click)="logout()">Logout</button>
+      </div>
+    </nav>
+    <main class="content">
+      <router-outlet />
+    </main>
+  </div>
+} @else {
+  <router-outlet />
+}

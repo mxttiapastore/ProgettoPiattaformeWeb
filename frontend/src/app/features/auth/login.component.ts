@@ -1,5 +1,5 @@
 // frontend/src/app/features/auth/login.component.ts
-import { Component } from '@angular/core';
+import { ChangeDetectorRef, Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { Router, RouterLink } from '@angular/router';
@@ -17,7 +17,7 @@ export class LoginComponent {
   error = '';
   isSubmitting = false;
 
-  constructor(private fb: FormBuilder, private auth: AuthService, private router: Router) {
+  constructor(private fb: FormBuilder, private auth: AuthService, private router: Router, private cdr: ChangeDetectorRef) {
     this.form = this.fb.group({
       username: ['', [Validators.required]],
       password: ['', [Validators.required]]
@@ -36,11 +36,12 @@ export class LoginComponent {
     this.auth.login(username!, password!).subscribe({
       next: () => {
         this.isSubmitting = false;
-        this.router.navigate(['/home']);
+        this.router.navigate(['/']);
       },
       error: err => {
         this.isSubmitting = false;
         this.error = err.status === 401 ? 'Credenziali errate' : 'Si è verificato un errore. Riprova.';
+        this.cdr.detectChanges();
       }
     });
   }

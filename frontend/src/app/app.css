@@ -1,0 +1,111 @@
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  font-family: 'Inter', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  background: #020617;
+  color: #e2e8f0;
+}
+
+.shell {
+  min-height: 100dvh;
+  display: flex;
+  flex-direction: column;
+}
+
+.topbar {
+  position: sticky;
+  top: 0;
+  z-index: 10;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 16px clamp(16px, 6vw, 48px);
+  background: rgba(2, 6, 23, 0.85);
+  backdrop-filter: blur(10px);
+  border-bottom: 1px solid rgba(148, 163, 184, .2);
+}
+
+.brand {
+  font-weight: 700;
+  font-size: 20px;
+  text-decoration: none;
+  color: #38bdf8;
+}
+
+.links {
+  display: flex;
+  gap: clamp(12px, 3vw, 24px);
+  align-items: center;
+}
+
+.links a {
+  position: relative;
+  text-decoration: none;
+  color: #cbd5f5;
+  font-weight: 500;
+  padding-bottom: 4px;
+}
+
+.links a.active::after,
+.links a:hover::after {
+  content: '';
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  height: 2px;
+  background: linear-gradient(135deg, #38bdf8, #6366f1);
+}
+
+.links a.active {
+  color: #f8fafc;
+}
+
+.user {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.user .name {
+  font-weight: 600;
+}
+
+.user button {
+  border: none;
+  border-radius: 999px;
+  padding: 8px 16px;
+  background: linear-gradient(135deg, #f97316, #fb7185);
+  color: #0b1120;
+  font-weight: 600;
+  cursor: pointer;
+  transition: transform .15s ease, box-shadow .2s ease;
+}
+
+.user button:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 12px 28px rgba(251, 113, 133, .3);
+}
+
+.content {
+  flex: 1;
+}
+
+@media (max-width: 768px) {
+  .topbar {
+    flex-direction: column;
+    gap: 12px;
+    align-items: flex-start;
+  }
+
+  .links {
+    flex-wrap: wrap;
+  }
+
+  .user {
+    align-self: flex-end;
+  }
+}

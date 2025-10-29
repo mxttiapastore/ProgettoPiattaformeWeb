@@ -1,0 +1,41 @@
+<section class="config-list">
+  <header>
+    <div>
+      <h1>Configurazioni salvate</h1>
+      <p>Rivedi le build già create, esportale nel carrello o continua a migliorarle nel configuratore.</p>
+    </div>
+    <a routerLink="/builder" class="btn">Nuova configurazione</a>
+  </header>
+
+  <div class="alerts">
+    <p class="alert error" *ngIf="error">{{ error }}</p>
+    <p class="alert success" *ngIf="success">{{ success }}</p>
+  </div>
+
+  <div *ngIf="loading" class="empty">Caricamento configurazioni…</div>
+  <div *ngIf="!loading && configurazioni.length === 0" class="empty">
+    Nessuna configurazione salvata. Inizia creando una nuova build!
+  </div>
+
+  <div class="cards" *ngIf="!loading && configurazioni.length">
+    <article class="card" *ngFor="let config of configurazioni">
+      <header>
+        <h2><strong>{{ config.nome }}</strong></h2>
+        <span class="totale">{{ config.totale | number:'1.2-2' }} €</span>
+      </header>
+      <ul class="componenti">
+        <li *ngFor="let voce of config.voci">
+          <div class="info">
+            <span class="nome">{{ voce.nomeComponente }}</span>
+            <small class="meta">{{ voce.tipologia.replace('_', ' ') }} ×{{ voce.quantita }}</small>
+          </div>
+          <span class="prezzo">{{ (voce.prezzoUnitario * voce.quantita) | number:'1.2-2' }} €</span>
+        </li>
+      </ul>
+      <footer class="card-actions">
+        <button (click)="aggiungiAlCarrello(config)">Aggiungi al carrello</button>
+        <a routerLink="/builder" class="link">Apri nel configuratore →</a>
+      </footer>
+    </article>
+  </div>
+</section>

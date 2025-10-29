@@ -1,15 +1,16 @@
 package mattia.progettopiattaformeweb.service;
 
 import mattia.progettopiattaformeweb.dto.ComponenteDto;
+import mattia.progettopiattaformeweb.dto.NuovoComponenteRequest;
 import mattia.progettopiattaformeweb.model.Componente;
 import mattia.progettopiattaformeweb.model.TipologiaComponente;
 import mattia.progettopiattaformeweb.repository.ComponenteRepository;
+import org.springframework.http.HttpStatus;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-
-import java.util.List;
+import org.springframework.web.server.ResponseStatusException;
 
 @Service
 public class ComponenteService {
@@ -19,16 +20,58 @@ public class ComponenteService {
     public ComponenteService(ComponenteRepository repo) { this.repo = repo; }
 
     @Transactional(readOnly = true)
-    public Page<ComponenteDto> cerca(TipologiaComponente tipologia, String marca, Pageable p) {
-        Page<Componente> page = (marca == null || marca.isBlank())
-                ? repo.findByTipologia(tipologia, p)
-                : repo.findByTipologiaAndMarcaContainingIgnoreCase(tipologia, marca, p);
+    public Page<ComponenteDto> cerca(TipologiaComponente tipologia, String marca, String nome, Pageable p) {
+        String filtroMarca = (marca == null || marca.isBlank()) ? null : marca.trim();
+        String filtroNome = (nome == null || nome.isBlank()) ? null : nome.trim();
+
+        Page<Componente> page;
+        if (filtroMarca != null && filtroNome != null) {
+            page = repo.findByTipologiaAndMarcaContainingIgnoreCaseAndNomeContainingIgnoreCase(
+                    tipologia, filtroMarca, filtroNome, p
+            );
+        } else if (filtroMarca != null) {
+            page = repo.findByTipologiaAndMarcaContainingIgnoreCase(tipologia, filtroMarca, p);
+        } else if (filtroNome != null) {
+            page = repo.findByTipologiaAndNomeContainingIgnoreCase(tipologia, filtroNome, p);
+        } else {
+            page = repo.findByTipologia(tipologia, p);
+        }
         return page.map(this::toDto);
     }
 
     @Transactional(readOnly = true)
     public ComponenteDto dettaglio(Long id) {
         return toDto(repo.findById(id).orElseThrow());
+    }
+
+    @Transactional
+    public ComponenteDto crea(NuovoComponenteRequest req) {
+        boolean exists = repo.existsByNomeIgnoreCaseAndMarcaIgnoreCaseAndTipologia(
+                req.nome(), req.marca(), req.tipologia()
+        );
+        if (exists) {
+            throw new ResponseStatusException(HttpStatus.CONFLICT,
+                    "Componente già presente per questa tipologia e marca");
+        }
+
+        Componente componente = Componente.builder()
+                .tipologia(req.tipologia())
+                .nome(req.nome())
+                .marca(req.marca())
+                .prezzo(req.prezzo())
+                .socketCpu(req.socketCpu())
+                .chipsetScheda(req.chipsetScheda())
+                .fattoreForma(req.fattoreForma())
+                .tipoMemoria(req.tipoMemoria())
+                .wattaggio(req.wattaggio())
+                .build();
+
+        return toDto(repo.save(componente));
+    }
+
+    @Transactional(readOnly = true)
+    public TipologiaComponente[] elencoTipologie() {
+        return TipologiaComponente.values();
     }
 
     private ComponenteDto toDto(Componente c) {
@@ -38,8 +81,4 @@ public class ComponenteService {
                 c.getFattoreForma(), c.getTipoMemoria(), c.getWattaggio()
         );
     }
-    public List<ComponenteDto> tutti() {
-        return repo.findAll().stream().map(this::toDto).toList();
-    }
-
 }

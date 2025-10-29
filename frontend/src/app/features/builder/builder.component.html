@@ -1,0 +1,123 @@
+<section class="builder">
+  <header class="intro">
+    <div class="heading">
+      <h1>Configuratore</h1>
+      <p>
+        Definisci ogni dettaglio della tua build, scegliendo i componenti migliori e monitorando in tempo reale il budget.
+      </p>
+    </div>
+    <div class="config-controls">
+      <div class="name-field">
+        <label>
+          <span>Nome configurazione</span>
+          <input [(ngModel)]="configurazioneNome" placeholder="Es. Build da gaming" />
+        </label>
+        <small>Personalizza il titolo per ritrovarla facilmente tra le configurazioni salvate.</small>
+      </div>
+      <div class="primary-actions">
+        <button class="btn" (click)="creaConfigurazione()" [disabled]="isSavingConfigurazione">
+          {{ isSavingConfigurazione ? 'Creazione…' : configurazione ? 'Rigenera configurazione' : 'Crea configurazione' }}
+        </button>
+        <button class="secondary" (click)="salvaConfigurazione()" [disabled]="!configurazione">
+          Salva configurazione
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <div class="alerts">
+    <p class="alert error" *ngIf="configurazioneErrore">{{ configurazioneErrore }}</p>
+    <p class="alert success" *ngIf="configurazioneMessaggio">{{ configurazioneMessaggio }}</p>
+    <p class="alert error" *ngIf="cartErrore">{{ cartErrore }}</p>
+    <p class="alert success" *ngIf="cartMessaggio">{{ cartMessaggio }}</p>
+  </div>
+
+  <div class="layout">
+    <section class="catalogo">
+      <div class="catalog-header">
+        <div class="tipologie" *ngIf="tipologie.length">
+          <button
+            class="pill"
+            *ngFor="let tip of tipologie"
+            (click)="selezionaTipologia(tip)"
+            [class.active]="tip === selectedTipologia"
+          >
+            {{ tip.replace('_', ' ') }}
+          </button>
+        </div>
+
+        <div class="filtro">
+          <label>
+            <span>Cerca componente</span>
+            <input
+              [(ngModel)]="ricercaNome"
+              (ngModelChange)="onSearchChange($event)"
+              placeholder="Digita il nome del componente"
+            />
+          </label>
+        </div>
+      </div>
+
+      <div class="lista">
+        <p *ngIf="componentiError" class="empty">{{ componentiError }}</p>
+        <p *ngIf="loadingComponenti" class="empty">Caricamento componenti…</p>
+        <div *ngIf="componenti && !loadingComponenti" class="cards">
+          <article class="card" *ngFor="let comp of componenti.content">
+            <header>
+              <h2>{{ comp.nome }}</h2>
+              <span class="badge">{{ comp.tipologia.replace('_', ' ') }}</span>
+            </header>
+            <p class="marca">{{ comp.marca }}</p>
+            <dl>
+              <div *ngIf="comp.socketCpu"><dt>Socket</dt><dd>{{ comp.socketCpu }}</dd></div>
+              <div *ngIf="comp.chipsetScheda"><dt>Chipset</dt><dd>{{ comp.chipsetScheda }}</dd></div>
+              <div *ngIf="comp.tipoMemoria"><dt>Memoria</dt><dd>{{ comp.tipoMemoria }}</dd></div>
+              <div *ngIf="comp.fattoreForma"><dt>Formato</dt><dd>{{ comp.fattoreForma }}</dd></div>
+              <div *ngIf="comp.wattaggio"><dt>Wattaggio</dt><dd>{{ comp.wattaggio }}W</dd></div>
+            </dl>
+            <div class="footer">
+              <span class="price">{{ comp.prezzo | number:'1.2-2' }} €</span>
+              <div class="card-actions">
+                <button (click)="aggiungiAllaConfigurazione(comp)">Aggiungi alla build</button>
+                <button class="ghost" (click)="aggiungiComponenteAlCarrello(comp)">Nel carrello</button>
+              </div>
+            </div>
+          </article>
+        </div>
+        <p *ngIf="componenti?.content?.length === 0 && !loadingComponenti" class="empty">
+          Nessun componente trovato per i filtri selezionati.
+        </p>
+      </div>
+
+      <div class="paginazione" *ngIf="componenti && componenti.totalPages > 1">
+        <button (click)="paginaPrecedente()" [disabled]="componenti.number === 0">← Precedente</button>
+        <span>Pagina {{ componenti.number + 1 }} di {{ componenti.totalPages }}</span>
+        <button (click)="paginaSuccessiva()" [disabled]="componenti.number >= componenti.totalPages - 1">Successiva →</button>
+      </div>
+    </section>
+
+    <aside class="riepilogo">
+      <div class="box">
+        <h2>Riepilogo configurazione</h2>
+        <p *ngIf="!configurazione">Crea una configurazione per iniziare a comporre il tuo PC.</p>
+        <ul *ngIf="configurazione">
+          <li *ngFor="let voce of configurazione.voci">
+            <div>
+              <span class="nome">{{ voce.nomeComponente }}</span>
+              <small class="tipologia">{{ voce.tipologia.replace('_', ' ') }} ×{{ voce.quantita }}</small>
+            </div>
+            <span class="prezzo">{{ (voce.prezzoUnitario * voce.quantita) | number:'1.2-2' }} €</span>
+          </li>
+        </ul>
+        <div class="totale" *ngIf="configurazione">
+          <span>Totale stimato</span>
+          <strong>{{ valoreTotaleConfigurazione() | number:'1.2-2' }} €</strong>
+        </div>
+        <button class="btn" *ngIf="configurazione" (click)="aggiungiConfigurazioneAlCarrello()">
+          Aggiungi la configurazione al carrello
+        </button>
+        <a routerLink="/configurazioni" class="link">Vai alle configurazioni salvate →</a>
+      </div>
+    </aside>
+  </div>
+</section>
