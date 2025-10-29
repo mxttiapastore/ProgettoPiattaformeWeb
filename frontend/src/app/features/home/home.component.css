@@ -36,6 +36,11 @@
   margin: 0 0 12px;
 }
 
+.eyebrow strong {
+  font-weight: 800;
+  color: #fbbf24;
+}
+
 .actions {
   display: flex;
   flex-wrap: wrap;
@@ -76,8 +81,8 @@
 
 .visual {
   position: relative;
-  display: grid;
-  place-items: center;
+  display: flex;
+  justify-content: center;
 }
 
 .visual .glow {
@@ -89,15 +94,28 @@
   z-index: 0;
 }
 
-.visual .card {
+.visual .stack {
   position: relative;
   z-index: 1;
-  background: rgba(15, 23, 42, .75);
+  display: grid;
+  gap: 18px;
+  width: clamp(260px, 32vw, 340px);
+}
+
+.visual .card {
+  background: rgba(15, 23, 42, .78);
   border: 1px solid rgba(148, 163, 184, .25);
-  padding: 28px;
+  padding: 24px 24px 28px;
   border-radius: 24px;
   box-shadow: 0 20px 45px rgba(8, 47, 73, .55);
   backdrop-filter: blur(8px);
+  display: grid;
+  gap: 12px;
+}
+
+.visual .card.highlight {
+  border-color: rgba(251, 191, 36, .55);
+  box-shadow: 0 24px 60px rgba(251, 191, 36, .2);
 }
 
 .visual .chip {
@@ -112,13 +130,14 @@
 }
 
 .visual h3 {
-  margin: 16px 0 12px;
+  margin: 0;
+  font-size: 20px;
 }
 
 .visual ul {
   list-style: none;
   padding: 0;
-  margin: 0 0 20px;
+  margin: 0;
   color: #cbd5f5;
 }
 
@@ -194,4 +213,17 @@
 .info p {
   color: #cbd5f5;
   margin: 0;
+}
+
+.credits {
+  margin-top: clamp(32px, 6vw, 56px);
+  font-size: 12px;
+  color: rgba(203, 213, 225, .7);
+  text-align: center;
+}
+
+@media (max-width: 640px) {
+  .visual .stack {
+    width: 100%;
+  }
 }

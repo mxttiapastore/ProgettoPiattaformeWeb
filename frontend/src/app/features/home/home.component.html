@@ -1,9 +1,9 @@
 <section class="hero">
   <div class="copy">
-    <p class="eyebrow">Benvenuto{{ auth.username ? ', ' + auth.username : '' }}</p>
-    <h1>Costruisci, personalizza e acquista il tuo PC ideale</h1>
+    <p class="eyebrow"><strong>Benvenuto{{ auth.username ? ' ' + auth.username : '' }}</strong></p>
+    <h1>CraftYourPC ti guida nella creazione del PC perfetto</h1>
     <p class="lead">
-      Accedi al configuratore completo per esplorare componenti compatibili, salvare build e condividerle con i tuoi amici.
+      Dai un nome alla tua prossima build, combina componenti compatibili e porta ogni idea direttamente nel carrello.
     </p>
     <div class="actions">
       <a routerLink="/builder" class="btn primary">Apri configuratore</a>
@@ -12,15 +12,37 @@
   </div>
   <div class="visual">
     <div class="glow"></div>
-    <div class="card">
-      <span class="chip">Build of the week</span>
-      <h3>Setup gaming RTX</h3>
-      <ul>
-        <li>CPU Ryzen serie 7</li>
-        <li>GPU NVIDIA RTX</li>
-        <li>32GB RAM DDR5</li>
-      </ul>
-      <span class="price">da 1.599€</span>
+    <div class="stack">
+      <div class="card highlight">
+        <span class="chip">Build consigliata</span>
+        <h3>Creator Pro Studio</h3>
+        <ul>
+          <li>CPU Ryzen 9 workstation</li>
+          <li>GPU NVIDIA RTX Studio</li>
+          <li>64GB RAM DDR5</li>
+        </ul>
+        <span class="price">da 2.399€</span>
+      </div>
+      <div class="card">
+        <span class="chip">Build consigliata</span>
+        <h3>Essenziale daily driver</h3>
+        <ul>
+          <li>CPU Intel i5 di 13ª gen</li>
+          <li>GPU integrata Iris Xe</li>
+          <li>16GB RAM DDR4</li>
+        </ul>
+        <span class="price">da 799€</span>
+      </div>
+      <div class="card">
+        <span class="chip">Build consigliata</span>
+        <h3>Gaming entry RTX</h3>
+        <ul>
+          <li>CPU Ryzen 5 serie 7000</li>
+          <li>GPU NVIDIA RTX 4060</li>
+          <li>32GB RAM DDR5</li>
+        </ul>
+        <span class="price">da 1.299€</span>
+      </div>
     </div>
   </div>
 </section>
@@ -65,3 +87,5 @@
     <p>Gli amministratori possono arricchire il database di componenti, mentre gli utenti gestiscono liberamente le proprie build.</p>
   </div>
 </section>
+
+<footer class="credits">@2025 Mattia Pastore</footer>

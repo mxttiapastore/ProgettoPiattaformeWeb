@@ -1,30 +1,40 @@
 <div class="auth-wrap">
-  <div class="card">
-    <h1>Accedi</h1>
+  <div class="glow"></div>
+  <div class="layout">
+    <div class="intro">
+      <p class="headline">BENVENUTO SU <span>CraftYourPC</span></p>
+      <p class="subtitle">effettua l'accesso o crea un nuovo account</p>
+    </div>
 
-    <form [formGroup]="form" (ngSubmit)="login()" novalidate>
-      <label>
-        <span>Username</span>
-        <input formControlName="username" autocomplete="username" />
-        <small class="field-error" *ngIf="isInvalid('username')">
-          Inserisci il tuo username
-        </small>
-      </label>
+    <div class="card">
+      <h1>Area riservata</h1>
+      <p class="lead">Accedi per ritrovare configurazioni, carrelli e consigli personalizzati.</p>
 
-      <label>
-        <span>Password</span>
-        <input type="password" formControlName="password" autocomplete="current-password" />
-        <small class="field-error" *ngIf="isInvalid('password')">
-          Inserisci la password
-        </small>
-      </label>
+      <form [formGroup]="form" (ngSubmit)="login()" novalidate>
+        <label>
+          <span>Username</span>
+          <input formControlName="username" autocomplete="username" />
+          <small class="field-error" *ngIf="isInvalid('username')">
+            Inserisci il tuo username
+          </small>
+        </label>
 
-      <button type="submit" [disabled]="form.invalid || isSubmitting">
-        {{ isSubmitting ? 'Accesso…' : 'Entra' }}
-      </button>
-      <p class="error" *ngIf="error">{{ error }}</p>
-    </form>
+        <label>
+          <span>Password</span>
+          <input type="password" formControlName="password" autocomplete="current-password" />
+          <small class="field-error" *ngIf="isInvalid('password')">
+            Inserisci la password
+          </small>
+        </label>
 
-    <p class="link">Non hai un account? <a routerLink="/register">Registrati</a></p>
+        <button type="submit" [disabled]="form.invalid || isSubmitting">
+          {{ isSubmitting ? 'Accesso…' : 'Entra' }}
+        </button>
+        <p class="error" *ngIf="error">{{ error }}</p>
+      </form>
+
+      <p class="link">Non hai un account? <a routerLink="/register">Registrati</a></p>
+    </div>
   </div>
+  <footer class="credits">@2025 Mattia Pastore</footer>
 </div>
