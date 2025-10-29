@@ -26,3 +26,4 @@ export class ApiService {
     return this.http.post<ComponenteDto>(`${this.base}/componenti`, body);
   }
 }
+

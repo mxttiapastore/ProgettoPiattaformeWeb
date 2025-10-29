@@ -19,7 +19,7 @@ public class RestExceptionHandler {
     public ResponseEntity<Map<String, Object>> handleResponseStatus(ResponseStatusException ex) {
         Map<String, Object> body = new LinkedHashMap<>();
         body.put("status", ex.getStatusCode().value());
-        body.put("error", ex.getReason() != null ? ex.getReason() : ex.getStatusCode().getReasonPhrase());
+        body.put("error", ex.getReason() != null ? ex.getReason() : ex.getStatusCode().getClass());
         return ResponseEntity.status(ex.getStatusCode()).body(body);
     }
 
