@@ -40,7 +40,7 @@ public class SecurityConfig {
                         .requestMatchers(HttpMethod.GET, "/").permitAll()
                         .requestMatchers(HttpMethod.POST, "/api/auth/login", "/api/auth/register").permitAll()
                         .requestMatchers("/v3/api-docs/**", "/swagger-ui/**", "/swagger-ui.html",
-                                "/error", "/css/**", "/js/**", "/images/**").permitAll()
+                                "/error", "/css/**", "/js/**", "/images/**", "api/**").permitAll()
                         .anyRequest().authenticated()
                 )
                 // mostri 401 quando manca/è invalido il token
