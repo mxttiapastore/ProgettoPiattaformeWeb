@@ -1,17 +1,27 @@
 <section class="builder">
   <header class="intro">
-    <div>
+    <div class="heading">
       <h1>Configuratore</h1>
-      <p>Seleziona una tipologia per esplorare i componenti disponibili, aggiungili alla tua build o direttamente al carrello.</p>
+      <p>
+        Definisci ogni dettaglio della tua build, scegliendo i componenti migliori e monitorando in tempo reale il budget.
+      </p>
     </div>
-    <div class="config-creation">
-      <label>
-        <span>Nome configurazione</span>
-        <input [(ngModel)]="configurazioneNome" placeholder="Es. Build da gaming" />
-      </label>
-      <button class="btn" (click)="creaConfigurazione()" [disabled]="isSavingConfigurazione">
-        {{ isSavingConfigurazione ? 'Creazione…' : configurazione ? 'Rigenera configurazione' : 'Crea configurazione' }}
-      </button>
+    <div class="config-controls">
+      <div class="name-field">
+        <label>
+          <span>Nome configurazione</span>
+          <input [(ngModel)]="configurazioneNome" placeholder="Es. Build da gaming" />
+        </label>
+        <small>Personalizza il titolo per ritrovarla facilmente tra le configurazioni salvate.</small>
+      </div>
+      <div class="primary-actions">
+        <button class="btn" (click)="creaConfigurazione()" [disabled]="isSavingConfigurazione">
+          {{ isSavingConfigurazione ? 'Creazione…' : configurazione ? 'Rigenera configurazione' : 'Crea configurazione' }}
+        </button>
+        <button class="secondary" (click)="salvaConfigurazione()" [disabled]="!configurazione">
+          Salva configurazione
+        </button>
+      </div>
     </div>
   </header>
 
@@ -24,23 +34,28 @@
 
   <div class="layout">
     <section class="catalogo">
-      <div class="tipologie" *ngIf="tipologie.length">
-        <button
-          class="pill"
-          *ngFor="let tip of tipologie"
-          (click)="selezionaTipologia(tip)"
-          [class.active]="tip === selectedTipologia"
-        >
-          {{ tip.replace('_', ' ') }}
-        </button>
-      </div>
+      <div class="catalog-header">
+        <div class="tipologie" *ngIf="tipologie.length">
+          <button
+            class="pill"
+            *ngFor="let tip of tipologie"
+            (click)="selezionaTipologia(tip)"
+            [class.active]="tip === selectedTipologia"
+          >
+            {{ tip.replace('_', ' ') }}
+          </button>
+        </div>
 
-      <div class="filtro">
-        <label>
-          <span>Filtra per marca</span>
-          <input [(ngModel)]="ricercaMarca" (keyup.enter)="caricaComponenti(0)" placeholder="Es. AMD" />
-        </label>
-        <button class="ghost" (click)="caricaComponenti(0)">Applica filtro</button>
+        <div class="filtro">
+          <label>
+            <span>Cerca componente</span>
+            <input
+              [(ngModel)]="ricercaNome"
+              (ngModelChange)="onSearchChange($event)"
+              placeholder="Digita il nome del componente"
+            />
+          </label>
+        </div>
       </div>
 
       <div class="lista">
@@ -62,7 +77,7 @@
             </dl>
             <div class="footer">
               <span class="price">{{ comp.prezzo | number:'1.2-2' }} €</span>
-              <div class="actions">
+              <div class="card-actions">
                 <button (click)="aggiungiAllaConfigurazione(comp)">Aggiungi alla build</button>
                 <button class="ghost" (click)="aggiungiComponenteAlCarrello(comp)">Nel carrello</button>
               </div>
@@ -98,8 +113,8 @@
           <span>Totale stimato</span>
           <strong>{{ valoreTotaleConfigurazione() | number:'1.2-2' }} €</strong>
         </div>
-        <button class="btn" *ngIf="configurazione" (click)="aggiungiTuttaConfigurazioneAlCarrello()">
-          Aggiungi configurazione al carrello
+        <button class="btn" *ngIf="configurazione" (click)="aggiungiConfigurazioneAlCarrello()">
+          Aggiungi la configurazione al carrello
         </button>
         <a routerLink="/configurazioni" class="link">Vai alle configurazioni salvate →</a>
       </div>

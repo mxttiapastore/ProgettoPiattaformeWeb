@@ -20,19 +20,19 @@
   <div class="cards" *ngIf="!loading && configurazioni.length">
     <article class="card" *ngFor="let config of configurazioni">
       <header>
-        <h2>{{ config.nome }}</h2>
+        <h2><strong>{{ config.nome }}</strong></h2>
         <span class="totale">{{ config.totale | number:'1.2-2' }} €</span>
       </header>
-      <ul>
+      <ul class="componenti">
         <li *ngFor="let voce of config.voci">
-          <div>
+          <div class="info">
             <span class="nome">{{ voce.nomeComponente }}</span>
-            <small>{{ voce.tipologia.replace('_', ' ') }} ×{{ voce.quantita }}</small>
+            <small class="meta">{{ voce.tipologia.replace('_', ' ') }} ×{{ voce.quantita }}</small>
           </div>
           <span class="prezzo">{{ (voce.prezzoUnitario * voce.quantita) | number:'1.2-2' }} €</span>
         </li>
       </ul>
-      <footer>
+      <footer class="card-actions">
         <button (click)="aggiungiAlCarrello(config)">Aggiungi al carrello</button>
         <a routerLink="/builder" class="link">Apri nel configuratore →</a>
       </footer>

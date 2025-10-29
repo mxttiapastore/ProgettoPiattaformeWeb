@@ -20,10 +20,22 @@ public class ComponenteService {
     public ComponenteService(ComponenteRepository repo) { this.repo = repo; }
 
     @Transactional(readOnly = true)
-    public Page<ComponenteDto> cerca(TipologiaComponente tipologia, String marca, Pageable p) {
-        Page<Componente> page = (marca == null || marca.isBlank())
-                ? repo.findByTipologia(tipologia, p)
-                : repo.findByTipologiaAndMarcaContainingIgnoreCase(tipologia, marca, p);
+    public Page<ComponenteDto> cerca(TipologiaComponente tipologia, String marca, String nome, Pageable p) {
+        String filtroMarca = (marca == null || marca.isBlank()) ? null : marca.trim();
+        String filtroNome = (nome == null || nome.isBlank()) ? null : nome.trim();
+
+        Page<Componente> page;
+        if (filtroMarca != null && filtroNome != null) {
+            page = repo.findByTipologiaAndMarcaContainingIgnoreCaseAndNomeContainingIgnoreCase(
+                    tipologia, filtroMarca, filtroNome, p
+            );
+        } else if (filtroMarca != null) {
+            page = repo.findByTipologiaAndMarcaContainingIgnoreCase(tipologia, filtroMarca, p);
+        } else if (filtroNome != null) {
+            page = repo.findByTipologiaAndNomeContainingIgnoreCase(tipologia, filtroNome, p);
+        } else {
+            page = repo.findByTipologia(tipologia, p);
+        }
         return page.map(this::toDto);
     }
 

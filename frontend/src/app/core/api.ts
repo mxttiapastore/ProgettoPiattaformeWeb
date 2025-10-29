@@ -84,12 +84,16 @@ export class ApiService {
   listComponenti(params: {
     tipologia: string;
     marca?: string | null;
+    nome?: string | null;
     page?: number;
     size?: number;
   }): Observable<Page<ComponenteDto>> {
     let httpParams = new HttpParams().set('tipologia', params.tipologia);
     if (params.marca) {
       httpParams = httpParams.set('marca', params.marca);
+    }
+    if (params.nome) {
+      httpParams = httpParams.set('nome', params.nome);
     }
     if (typeof params.page === 'number') {
       httpParams = httpParams.set('page', params.page);

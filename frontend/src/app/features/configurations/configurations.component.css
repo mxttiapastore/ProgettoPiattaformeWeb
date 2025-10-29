@@ -105,7 +105,7 @@ header p {
   color: #fbbf24;
 }
 
-.card ul {
+.componenti {
   list-style: none;
   margin: 0;
   padding: 0;
@@ -113,19 +113,27 @@ header p {
   gap: 10px;
 }
 
-.card li {
+.componenti li {
   display: flex;
   justify-content: space-between;
   gap: 12px;
+  align-items: flex-start;
 }
 
-.nome {
-  font-weight: 600;
+.componenti .info {
+  display: grid;
+  gap: 4px;
 }
 
-.card small {
-  display: block;
+.componenti .nome {
+  font-weight: 700;
+  font-size: 15px;
+}
+
+.componenti .meta {
   color: #94a3b8;
+  font-size: 12px;
+  letter-spacing: 0.02em;
 }
 
 .prezzo {
@@ -133,24 +141,24 @@ header p {
   font-weight: 600;
 }
 
-.card footer {
+.card-actions {
   display: flex;
   justify-content: space-between;
   align-items: center;
   gap: 12px;
 }
 
-.card button {
-  border-radius: 14px;
+.card-actions button {
+  border-radius: 16px;
   border: none;
-  padding: 10px 16px;
+  padding: 10px 18px;
   font-weight: 600;
   cursor: pointer;
   background: linear-gradient(135deg, #6366f1, #8b5cf6);
   color: #0f172a;
 }
 
-.card button:hover {
+.card-actions button:hover {
   transform: translateY(-1px);
 }
 

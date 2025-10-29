@@ -22,8 +22,9 @@ public class ComponentiController {
     @GetMapping
     public Page<ComponenteDto> elenco(@RequestParam TipologiaComponente tipologia,
                                       @RequestParam(required = false) String marca,
+                                      @RequestParam(required = false) String nome,
                                       @PageableDefault(size = 12, sort = "prezzo") Pageable p) {
-        return servizio.cerca(tipologia, marca, p);
+        return servizio.cerca(tipologia, marca, nome, p);
     }
 
     @GetMapping("/{id}")

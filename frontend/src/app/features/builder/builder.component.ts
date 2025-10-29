@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { RouterLink } from '@angular/router';
@@ -13,13 +13,14 @@ import { switchMap } from 'rxjs';
   templateUrl: './builder.component.html',
   styleUrls: ['./builder.component.css']
 })
-export class BuilderComponent implements OnInit {
+export class BuilderComponent implements OnInit, OnDestroy {
   tipologie: string[] = [];
   selectedTipologia?: string;
   componenti?: Page<ComponenteDto>;
   loadingComponenti = false;
   componentiError = '';
-  ricercaMarca = '';
+  ricercaNome = '';
+  private searchDebounce?: ReturnType<typeof setTimeout>;
 
   configurazione?: ConfigurazioneDto;
   configurazioneNome = '';
@@ -47,9 +48,6 @@ export class BuilderComponent implements OnInit {
   }
 
   selezionaTipologia(tipologia: string) {
-    if (this.selectedTipologia === tipologia) {
-      return;
-    }
     this.selectedTipologia = tipologia;
     this.componenti = undefined;
     this.caricaComponenti(0);
@@ -61,21 +59,23 @@ export class BuilderComponent implements OnInit {
     }
     this.loadingComponenti = true;
     this.componentiError = '';
-    this.api.listComponenti({
-      tipologia: this.selectedTipologia,
-      marca: this.ricercaMarca ? this.ricercaMarca : undefined,
-      page,
-      size: 12
-    }).subscribe({
-      next: res => {
-        this.componenti = res;
-        this.loadingComponenti = false;
-      },
-      error: () => {
-        this.componentiError = 'Errore durante il recupero dei componenti.';
-        this.loadingComponenti = false;
-      }
-    });
+    this.api
+      .listComponenti({
+        tipologia: this.selectedTipologia,
+        nome: this.ricercaNome ? this.ricercaNome : undefined,
+        page,
+        size: 12
+      })
+      .subscribe({
+        next: res => {
+          this.componenti = res;
+          this.loadingComponenti = false;
+        },
+        error: () => {
+          this.componentiError = 'Errore durante il recupero dei componenti.';
+          this.loadingComponenti = false;
+        }
+      });
   }
 
   paginaSuccessiva() {
@@ -114,6 +114,24 @@ export class BuilderComponent implements OnInit {
     });
   }
 
+  salvaConfigurazione() {
+    if (!this.configurazione) {
+      this.configurazioneErrore = 'Crea una configurazione prima di salvarla.';
+      return;
+    }
+    this.configurazioneErrore = '';
+    this.configurazioneMessaggio = '';
+    this.api.getConfigurazione(this.configurazione.id).subscribe({
+      next: conf => {
+        this.configurazione = conf;
+        this.configurazioneMessaggio = 'Configurazione salvata! Trovi tutte le build nella sezione Configurazioni.';
+      },
+      error: () => {
+        this.configurazioneErrore = 'Non è stato possibile salvare la configurazione in questo momento.';
+      }
+    });
+  }
+
   aggiungiAllaConfigurazione(componente: ComponenteDto) {
     if (!this.configurazione) {
       this.configurazioneErrore = 'Crea una configurazione prima di aggiungere componenti.';
@@ -132,7 +150,7 @@ export class BuilderComponent implements OnInit {
     });
   }
 
-  aggiungiTuttaConfigurazioneAlCarrello() {
+  aggiungiConfigurazioneAlCarrello() {
     if (!this.configurazione) {
       this.cartErrore = 'Crea una configurazione per poterla spedire nel carrello.';
       return;
@@ -170,5 +188,19 @@ export class BuilderComponent implements OnInit {
 
   valoreTotaleConfigurazione(): number {
     return this.configurazione?.totale ?? 0;
+  }
+
+  onSearchChange(term: string) {
+    this.ricercaNome = term;
+    if (this.searchDebounce) {
+      clearTimeout(this.searchDebounce);
+    }
+    this.searchDebounce = setTimeout(() => this.caricaComponenti(0), 250);
+  }
+
+  ngOnDestroy(): void {
+    if (this.searchDebounce) {
+      clearTimeout(this.searchDebounce);
+    }
   }
 }
