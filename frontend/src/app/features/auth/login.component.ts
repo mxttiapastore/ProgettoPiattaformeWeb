@@ -36,7 +36,7 @@ export class LoginComponent {
     this.auth.login(username!, password!).subscribe({
       next: () => {
         this.isSubmitting = false;
-        this.router.navigate(['/home']);
+        this.router.navigate(['/']);
       },
       error: err => {
         this.isSubmitting = false;

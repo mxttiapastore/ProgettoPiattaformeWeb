@@ -1,0 +1,67 @@
+<section class="hero">
+  <div class="copy">
+    <p class="eyebrow">Benvenuto{{ auth.username ? ', ' + auth.username : '' }}</p>
+    <h1>Costruisci, personalizza e acquista il tuo PC ideale</h1>
+    <p class="lead">
+      Accedi al configuratore completo per esplorare componenti compatibili, salvare build e condividerle con i tuoi amici.
+    </p>
+    <div class="actions">
+      <a routerLink="/builder" class="btn primary">Apri configuratore</a>
+      <a routerLink="/configurazioni" class="btn ghost">Le mie configurazioni</a>
+    </div>
+  </div>
+  <div class="visual">
+    <div class="glow"></div>
+    <div class="card">
+      <span class="chip">Build of the week</span>
+      <h3>Setup gaming RTX</h3>
+      <ul>
+        <li>CPU Ryzen serie 7</li>
+        <li>GPU NVIDIA RTX</li>
+        <li>32GB RAM DDR5</li>
+      </ul>
+      <span class="price">da 1.599€</span>
+    </div>
+  </div>
+</section>
+
+<section class="grid">
+  <article class="card link" routerLink="/builder">
+    <h2>Configuratore PC</h2>
+    <p>Scopri le componenti disponibili per tipologia, confronta i prezzi e aggiungi al volo elementi al tuo progetto.</p>
+    <span class="cta">Inizia ora →</span>
+  </article>
+
+  <article class="card link" routerLink="/carrello">
+    <h2>Carrello intelligente</h2>
+    <p>Riempi il carrello con componenti singole o intere configurazioni e monitora il totale in tempo reale.</p>
+    <span class="cta">Vai al carrello →</span>
+  </article>
+
+  <article class="card link" routerLink="/configurazioni">
+    <h2>Build salvate</h2>
+    <p>Raccogli tutte le configurazioni che crei, duplicale e condividile con chi vuoi con un solo click.</p>
+    <span class="cta">Gestisci le build →</span>
+  </article>
+
+  <article class="card link admin" *ngIf="auth.hasRole('ROLE_ADMIN')" routerLink="/admin/componenti">
+    <h2>Aggiungi componenti</h2>
+    <p>Gestisci il catalogo direttamente dal pannello web inserendo nuovi pezzi certificati.</p>
+    <span class="cta">Area Admin →</span>
+  </article>
+</section>
+
+<section class="info">
+  <div>
+    <h3>Compatibilità guidata</h3>
+    <p>Ogni componente mostra informazioni chiave come socket, chipset e wattaggio per rendere semplicissimo creare build solide.</p>
+  </div>
+  <div>
+    <h3>Esperienza moderna</h3>
+    <p>Interfaccia rapida, dark accents e card animate rendono piacevole l'esplorazione del catalogo e la gestione del carrello.</p>
+  </div>
+  <div>
+    <h3>Ruoli e sicurezza</h3>
+    <p>Gli amministratori possono arricchire il database di componenti, mentre gli utenti gestiscono liberamente le proprie build.</p>
+  </div>
+</section>
