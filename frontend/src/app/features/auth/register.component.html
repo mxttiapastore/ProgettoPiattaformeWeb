@@ -1,42 +1,52 @@
 <div class="auth-wrap">
-  <div class="card">
-    <h1>Crea il tuo account</h1>
+  <div class="glow"></div>
+  <div class="layout">
+    <div class="intro">
+      <p class="headline">BENVENUTO SU <span>CraftYourPC</span></p>
+      <p class="subtitle">effettua l'accesso o crea un nuovo account</p>
+    </div>
 
-    <form [formGroup]="form" (ngSubmit)="register()" novalidate>
-      <label>
-        <span>Username</span>
-        <input formControlName="username" autocomplete="username" />
-        <small class="field-error" *ngIf="isInvalid('username')">
-          L'username è obbligatorio (min. 3 caratteri)
-        </small>
-      </label>
+    <div class="card">
+      <h1>Crea il tuo profilo</h1>
+      <p class="lead">Registrati per salvare build, gestire il carrello e sbloccare consigli dedicati.</p>
 
-      <label>
-        <span>Password</span>
-        <input type="password" formControlName="password" autocomplete="new-password" />
-        <small class="field-error" *ngIf="isInvalid('password')">
-          La password deve contenere almeno 8 caratteri
-        </small>
-      </label>
+      <form [formGroup]="form" (ngSubmit)="register()" novalidate>
+        <label>
+          <span>Username</span>
+          <input formControlName="username" autocomplete="username" />
+          <small class="field-error" *ngIf="isInvalid('username')">
+            L'username è obbligatorio (min. 3 caratteri)
+          </small>
+        </label>
 
-      <label>
-        <span>Conferma password</span>
-        <input type="password" formControlName="confirmPassword" autocomplete="new-password" />
-        <small class="field-error" *ngIf="isInvalid('confirmPassword') && !form.hasError('mismatch')">
-          Conferma la password
-        </small>
-        <small class="field-error" *ngIf="form.hasError('mismatch') && form.get('confirmPassword')?.touched">
-          Le password non coincidono
-        </small>
-      </label>
+        <label>
+          <span>Password</span>
+          <input type="password" formControlName="password" autocomplete="new-password" />
+          <small class="field-error" *ngIf="isInvalid('password')">
+            La password deve contenere almeno 8 caratteri
+          </small>
+        </label>
 
-      <button type="submit" [disabled]="form.invalid || isSubmitting">
-        {{ isSubmitting ? 'Registrazione…' : 'Registrati' }}
-      </button>
+        <label>
+          <span>Conferma password</span>
+          <input type="password" formControlName="confirmPassword" autocomplete="new-password" />
+          <small class="field-error" *ngIf="isInvalid('confirmPassword') && !form.hasError('mismatch')">
+            Conferma la password
+          </small>
+          <small class="field-error" *ngIf="form.hasError('mismatch') && form.get('confirmPassword')?.touched">
+            Le password non coincidono
+          </small>
+        </label>
 
-      <p class="error" *ngIf="error">{{ error }}</p>
-    </form>
+        <button type="submit" [disabled]="form.invalid || isSubmitting">
+          {{ isSubmitting ? 'Registrazione…' : 'Registrati' }}
+        </button>
 
-    <p class="link">Hai già un account? <a routerLink="/login">Accedi</a></p>
+        <p class="error" *ngIf="error">{{ error }}</p>
+      </form>
+
+      <p class="link">Hai già un account? <a routerLink="/login">Accedi</a></p>
+    </div>
   </div>
+  <footer class="credits">@2025 Mattia Pastore</footer>
 </div>

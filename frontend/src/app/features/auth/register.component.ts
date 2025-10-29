@@ -38,8 +38,8 @@ export class RegisterComponent {
     const { username, password } = this.form.value;
     this.auth.register(username!, password!).subscribe({
       next: () => {
-        this.isSubmitting = true;
-        this.router.navigate(['/home']);
+        this.isSubmitting = false;
+        this.router.navigate(['/']);
       },
       error: err => {
         this.isSubmitting = false;

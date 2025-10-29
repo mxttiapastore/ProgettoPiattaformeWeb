@@ -1,0 +1,73 @@
+<section class="admin-form">
+  <header>
+    <div>
+      <h1>Aggiungi componente</h1>
+      <p>Gli amministratori possono arricchire il catalogo inserendo nuovi componenti con tutte le informazioni di compatibilità.</p>
+    </div>
+  </header>
+
+  <div class="alerts">
+    <p class="alert success" *ngIf="success">{{ success }}</p>
+    <p class="alert error" *ngIf="error">{{ error }}</p>
+  </div>
+
+  <form [formGroup]="form" (ngSubmit)="submit()" novalidate>
+    <div class="grid">
+      <label>
+        <span>Tipologia *</span>
+        <select formControlName="tipologia">
+          <option value="" disabled>Seleziona</option>
+          <option *ngFor="let tip of tipologie" [value]="tip">{{ tip.replace('_', ' ') }}</option>
+        </select>
+        <small class="error" *ngIf="isInvalid('tipologia')">Campo obbligatorio</small>
+      </label>
+
+      <label>
+        <span>Nome *</span>
+        <input formControlName="nome" placeholder="Es. Ryzen 7 7800X3D" />
+        <small class="error" *ngIf="isInvalid('nome')">Inserisci il nome del componente</small>
+      </label>
+
+      <label>
+        <span>Marca *</span>
+        <input formControlName="marca" placeholder="Es. AMD" />
+        <small class="error" *ngIf="isInvalid('marca')">Inserisci la marca</small>
+      </label>
+
+      <label>
+        <span>Prezzo *</span>
+        <input type="number" step="0.01" min="0" formControlName="prezzo" placeholder="Es. 349.99" />
+        <small class="error" *ngIf="isInvalid('prezzo')">Inserisci un prezzo valido</small>
+      </label>
+    </div>
+
+    <div class="grid second">
+      <label>
+        <span>Socket CPU</span>
+        <input formControlName="socketCpu" placeholder="Es. AM5" />
+      </label>
+      <label>
+        <span>Chipset</span>
+        <input formControlName="chipsetScheda" placeholder="Es. B650" />
+      </label>
+      <label>
+        <span>Fattore forma</span>
+        <input formControlName="fattoreForma" placeholder="Es. ATX" />
+      </label>
+      <label>
+        <span>Tipo memoria</span>
+        <input formControlName="tipoMemoria" placeholder="Es. DDR5" />
+      </label>
+      <label>
+        <span>Wattaggio</span>
+        <input type="number" min="0" formControlName="wattaggio" placeholder="Es. 750" />
+      </label>
+    </div>
+
+    <div class="actions">
+      <button type="submit" [disabled]="form.invalid || isSubmitting">
+        {{ isSubmitting ? 'Salvataggio…' : 'Salva componente' }}
+      </button>
+    </div>
+  </form>
+</section>

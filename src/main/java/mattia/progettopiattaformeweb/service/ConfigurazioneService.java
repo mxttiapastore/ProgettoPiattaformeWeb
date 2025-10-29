@@ -4,8 +4,11 @@ import mattia.progettopiattaformeweb.dto.*;
 import mattia.progettopiattaformeweb.model.*;
 import mattia.progettopiattaformeweb.repository.ComponenteRepository;
 import mattia.progettopiattaformeweb.repository.ConfigurazioneRepository;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
+import java.util.List;
 
 import java.math.BigDecimal;
 import java.util.stream.Collectors;
@@ -45,6 +48,14 @@ public class ConfigurazioneService {
     @Transactional(readOnly = true)
     public ConfigurazioneDto dettaglio(Long id) {
         return toDto(confRepo.findById(id).orElseThrow());
+    }
+
+    @Transactional(readOnly = true)
+    public List<ConfigurazioneDto> elenco() {
+        return confRepo.findAll(Sort.by(Sort.Direction.ASC, "nome"))
+                .stream()
+                .map(this::toDto)
+                .toList();
     }
 
     private ConfigurazioneDto toDto(Configurazione c) {

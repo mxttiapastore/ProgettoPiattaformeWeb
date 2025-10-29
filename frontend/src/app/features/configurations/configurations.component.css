@@ -1,0 +1,165 @@
+:host {
+  display: block;
+  padding: clamp(24px, 5vw, 48px);
+  background: #0f172a;
+  color: #e2e8f0;
+  min-height: calc(100dvh - 88px);
+}
+
+header {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 16px;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin-bottom: 20px;
+}
+
+header h1 {
+  margin: 0 0 8px;
+  font-size: clamp(28px, 4vw, 38px);
+}
+
+header p {
+  margin: 0;
+  color: #94a3b8;
+  max-width: 480px;
+}
+
+.btn {
+  align-self: center;
+  border-radius: 999px;
+  padding: 10px 20px;
+  border: none;
+  background: linear-gradient(135deg, #38bdf8, #6366f1);
+  color: #0b1120;
+  font-weight: 600;
+  cursor: pointer;
+  text-decoration: none;
+  transition: transform .15s ease, box-shadow .2s ease;
+}
+
+.btn:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 12px 32px rgba(99, 102, 241, .35);
+}
+
+.alerts {
+  display: grid;
+  gap: 8px;
+  margin-bottom: 16px;
+}
+
+.alert {
+  padding: 10px 14px;
+  border-radius: 12px;
+  font-size: 14px;
+}
+
+.alert.error {
+  background: rgba(248, 113, 113, .15);
+  color: #f87171;
+}
+
+.alert.success {
+  background: rgba(16, 185, 129, .12);
+  color: #4ade80;
+}
+
+.empty {
+  text-align: center;
+  padding: 40px 0;
+  color: #94a3b8;
+}
+
+.cards {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 20px;
+}
+
+.card {
+  background: rgba(15, 23, 42, .75);
+  border: 1px solid rgba(148, 163, 184, .2);
+  border-radius: 22px;
+  padding: 20px;
+  display: grid;
+  gap: 16px;
+}
+
+.card header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 12px;
+  margin: 0;
+}
+
+.card h2 {
+  margin: 0;
+  font-size: 20px;
+}
+
+.totale {
+  font-weight: 700;
+  color: #fbbf24;
+}
+
+.card ul {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  gap: 10px;
+}
+
+.card li {
+  display: flex;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+.nome {
+  font-weight: 600;
+}
+
+.card small {
+  display: block;
+  color: #94a3b8;
+}
+
+.prezzo {
+  color: #fbbf24;
+  font-weight: 600;
+}
+
+.card footer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 12px;
+}
+
+.card button {
+  border-radius: 14px;
+  border: none;
+  padding: 10px 16px;
+  font-weight: 600;
+  cursor: pointer;
+  background: linear-gradient(135deg, #6366f1, #8b5cf6);
+  color: #0f172a;
+}
+
+.card button:hover {
+  transform: translateY(-1px);
+}
+
+.link {
+  color: #60a5fa;
+  text-decoration: none;
+  font-weight: 600;
+}
+
+.link:hover {
+  text-decoration: underline;
+}
