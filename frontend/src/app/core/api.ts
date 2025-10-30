@@ -150,6 +150,10 @@ export class ApiService {
     return this.http.put<CarrelloDto>(`${this.base}/carrelli/${carrelloId}/configurazioni/${configurazioneId}`, {});
   }
 
+  rimuoviVoceCarrello(carrelloId: number, voceId: number): Observable<CarrelloDto> {
+    return this.http.delete<CarrelloDto>(`${this.base}/carrelli/${carrelloId}/voci/${voceId}`);
+  }
+
   profilo(): Observable<ProfiloUtenteDto> {
     return this.http.get<ProfiloUtenteDto>(`${this.base}/users/me`);
   }

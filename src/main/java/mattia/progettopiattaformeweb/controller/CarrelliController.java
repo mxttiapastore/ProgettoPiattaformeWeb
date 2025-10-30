@@ -29,4 +29,9 @@ public class CarrelliController {
     public CarrelloDto aggiungiConfigurazione(@PathVariable Long id, @PathVariable Long configId) {
         return servizio.aggiungiConfigurazione(id, configId);
     }
+
+    @DeleteMapping("/{id}/voci/{voceId}")
+    public CarrelloDto rimuoviVoce(@PathVariable Long id, @PathVariable Long voceId) {
+        return servizio.rimuoviVoce(id, voceId);
+    }
 }

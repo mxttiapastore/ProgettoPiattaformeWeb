@@ -11,6 +11,7 @@
   </header>
 
   <div class="alerts">
+    <p class="alert success" *ngIf="success">{{ success }}</p>
     <p class="alert info" *ngIf="message">{{ message }}</p>
     <p class="alert error" *ngIf="error">{{ error }}</p>
     <p class="alert info" *ngIf="loading">Aggiornamento in corso…</p>
@@ -22,19 +23,28 @@
 
   <div class="lista" *ngIf="carrello && carrello.voci.length">
     <article class="item" *ngFor="let voce of carrello.voci">
-      <div>
+      <div class="info">
         <h2>{{ voce.nomeComponente }}</h2>
         <p class="meta">Quantità: {{ voce.quantita }}</p>
       </div>
-      <div class="prezzi">
-        <span>{{ voce.prezzoUnitario | number:'1.2-2' }} €</span>
-        <strong>{{ voce.subtotale | number:'1.2-2' }} €</strong>
+      <div class="item-actions">
+        <div class="prezzi">
+          <span>{{ voce.prezzoUnitario | number:'1.2-2' }} €</span>
+          <strong>{{ voce.subtotale | number:'1.2-2' }} €</strong>
+        </div>
+        <button class="remove" type="button" (click)="rimuoviVoce(voce.id)" [disabled]="loading"
+          aria-label="Rimuovi {{ voce.nomeComponente }} dal carrello">
+          <span aria-hidden="true">🗑️</span>
+        </button>
       </div>
     </article>
 
     <footer class="totale">
-      <span>Totale carrello</span>
-      <strong>{{ totale() | number:'1.2-2' }} €</strong>
+      <div>
+        <span>Totale carrello</span>
+        <strong>{{ totale() | number:'1.2-2' }} €</strong>
+      </div>
+      <a class="checkout" routerLink="/checkout">Checkout</a>
     </footer>
   </div>
 </section>

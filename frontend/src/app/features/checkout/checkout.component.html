@@ -1,0 +1,106 @@
+<section class="checkout">
+  <header>
+    <div>
+      <h1>Checkout</h1>
+      <p>Completa le istruzioni di consegna e scegli il metodo di pagamento per finalizzare il tuo ordine.</p>
+    </div>
+    <a class="back" routerLink="/carrello">← Torna al carrello</a>
+  </header>
+
+  <div class="alerts">
+    <p class="alert success" *ngIf="success">{{ success }}</p>
+    <p class="alert info" *ngIf="info">{{ info }}</p>
+    <p class="alert error" *ngIf="error">{{ error }}</p>
+    <p class="alert info" *ngIf="loading">Caricamento in corso…</p>
+  </div>
+
+  <ng-container *ngIf="haCarrelloAttivo; else noCart">
+    <ng-container *ngIf="carrelloCaricato && carrello; else waiting">
+      <div class="layout">
+        <form class="panel" [formGroup]="checkoutForm" (ngSubmit)="confermaOrdine()" novalidate>
+          <h2>Istruzioni di consegna</h2>
+          <div class="grid">
+            <label class="field">
+              <span>Nome</span>
+              <input type="text" formControlName="nome" [class.invalid]="campoNonValido('nome')">
+            </label>
+            <label class="field">
+              <span>Cognome</span>
+              <input type="text" formControlName="cognome" [class.invalid]="campoNonValido('cognome')">
+            </label>
+          </div>
+          <label class="field">
+            <span>Indirizzo</span>
+            <input type="text" formControlName="indirizzo" [class.invalid]="campoNonValido('indirizzo')">
+          </label>
+          <div class="grid">
+            <label class="field">
+              <span>Città</span>
+              <input type="text" formControlName="citta" [class.invalid]="campoNonValido('citta')">
+            </label>
+            <label class="field">
+              <span>Provincia</span>
+              <input type="text" formControlName="provincia" maxlength="2" placeholder="ES" [class.invalid]="campoNonValido('provincia')">
+            </label>
+            <label class="field">
+              <span>CAP</span>
+              <input type="text" formControlName="cap" maxlength="5" placeholder="00000" [class.invalid]="campoNonValido('cap')">
+            </label>
+          </div>
+          <label class="field">
+            <span>Note sulla consegna</span>
+            <textarea rows="3" formControlName="note"></textarea>
+          </label>
+
+          <section class="payments">
+            <h3>Istruzioni di pagamento</h3>
+            <div class="options">
+              <button type="button" *ngFor="let metodo of pagamenti"
+                      (click)="selezionaPagamento(metodo)"
+                      [class.selected]="pagamentoSelezionato(metodo)">
+                {{ metodo }}
+              </button>
+            </div>
+          </section>
+
+          <button type="submit" class="primary">Conferma ordine</button>
+        </form>
+
+        <aside class="panel riepilogo">
+          <h2>Riepilogo ordine</h2>
+          <div class="items" *ngIf="carrello.voci.length; else emptyCart">
+            <article class="voce" *ngFor="let voce of carrello.voci">
+              <div>
+                <h3>{{ voce.nomeComponente }}</h3>
+                <p>Qtà: {{ voce.quantita }}</p>
+              </div>
+              <span>{{ voce.subtotale | number:'1.2-2' }} €</span>
+            </article>
+          </div>
+          <ng-template #emptyCart>
+            <p class="empty">Il carrello è vuoto.</p>
+          </ng-template>
+          <div class="totale">
+            <span>Totale</span>
+            <strong>{{ totale() | number:'1.2-2' }} €</strong>
+          </div>
+        </aside>
+      </div>
+    </ng-container>
+  </ng-container>
+
+  <ng-template #waiting>
+    <div class="empty-state" *ngIf="loading">
+      <p>Recupero del carrello in corso…</p>
+    </div>
+    <div class="empty-state" *ngIf="!loading && carrelloCaricato">
+      <p>Non è stato possibile visualizzare il riepilogo del carrello.</p>
+    </div>
+  </ng-template>
+
+  <ng-template #noCart>
+    <div class="empty-state">
+      <p>Non è possibile procedere al checkout senza un carrello. Visita il <a routerLink="/builder">configuratore</a> per crearne uno.</p>
+    </div>
+  </ng-template>
+</section>
