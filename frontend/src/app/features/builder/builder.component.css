@@ -59,7 +59,7 @@
 
 .name-field input {
   background: rgba(15, 23, 42, .55);
-  border: 1px solid rgba(148, 163, 184, .35);
+  border: 3px solid rgba(148, 163, 184, .35);
   color: inherit;
   border-radius: 14px;
   padding: 12px 14px;
@@ -225,7 +225,7 @@
   border: 1px solid rgba(148, 163, 184, .35);
   color: inherit;
   border-radius: 14px;
-  padding: 11px 14px;
+  padding: 11px 7px;
   width: 100%;
 }
 
