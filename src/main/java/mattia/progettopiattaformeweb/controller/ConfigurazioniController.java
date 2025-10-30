@@ -4,6 +4,7 @@ import jakarta.validation.Valid;
 import mattia.progettopiattaformeweb.dto.*;
 import mattia.progettopiattaformeweb.service.ConfigurazioneService;
 import java.util.List;
+import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
@@ -30,5 +31,11 @@ public class ConfigurazioniController {
     @PutMapping("/{id}/voci")
     public ConfigurazioneDto aggiungi(@PathVariable Long id, @Valid @RequestBody AggiungiVoceReq req) {
         return servizio.aggiungiVoce(id, req.componenteId(), req.quantita());
+    }
+
+    @DeleteMapping("/{id}")
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    public void elimina(@PathVariable Long id) {
+        servizio.elimina(id);
     }
 }

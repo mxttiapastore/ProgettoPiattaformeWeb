@@ -3,8 +3,10 @@ package mattia.progettopiattaformeweb.service;
 import mattia.progettopiattaformeweb.dto.*;
 import mattia.progettopiattaformeweb.model.*;
 import mattia.progettopiattaformeweb.repository.*;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.server.ResponseStatusException;
 
 import java.math.BigDecimal;
 import java.util.stream.Collectors;
@@ -52,6 +54,19 @@ public class CarrelloService {
                     .build();
             car.getVoci().add(voce);
         });
+        return toDto(car);
+    }
+
+    @Transactional
+    public CarrelloDto rimuoviVoce(Long carrelloId, Long voceId) {
+        var car = carRepo.findById(carrelloId).orElseThrow();
+        var voce = voceRepo.findById(voceId).orElseThrow();
+        if (!voce.getCarrello().getId().equals(car.getId())) {
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST,
+                    "La voce non appartiene al carrello specificato");
+        }
+        car.getVoci().remove(voce);
+        voceRepo.delete(voce);
         return toDto(car);
     }
 

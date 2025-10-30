@@ -47,11 +47,25 @@ export class ConfigurationsComponent implements OnInit {
       .subscribe({
         next: carrello => {
           this.state.setCartId(carrello.id);
-          this.success = `Configurazione "${config.nome}" aggiunta al carrello.`;
+          this.success = 'Configurazione aggiunta al carrello!';
         },
         error: () => {
-          this.error = 'Non è stato possibile aggiungere la configurazione al carrello.';
+          this.error = "Errore durante l'aggiunta al carrello della configurazione.";
         }
       });
+  }
+
+  rimuoviConfigurazione(config: ConfigurazioneDto) {
+    this.success = '';
+    this.error = '';
+    this.api.deleteConfigurazione(config.id).subscribe({
+      next: () => {
+        this.configurazioni = this.configurazioni.filter(c => c.id !== config.id);
+        this.success = 'Configurazione eliminata con successo.';
+      },
+      error: () => {
+        this.error = "Errore durante l'eliminazione della configurazione.";
+      }
+    });
   }
 }

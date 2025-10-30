@@ -127,6 +127,10 @@ export class ApiService {
     return this.http.get<ConfigurazioneDto[]>(`${this.base}/configurazioni`);
   }
 
+  deleteConfigurazione(id: number): Observable<void> {
+    return this.http.delete<void>(`${this.base}/configurazioni/${id}`);
+  }
+
   creaCarrello(): Observable<CarrelloDto> {
     return this.http.post<CarrelloDto>(`${this.base}/carrelli`, {});
   }
@@ -144,6 +148,10 @@ export class ApiService {
 
   aggiungiConfigurazioneAlCarrello(carrelloId: number, configurazioneId: number): Observable<CarrelloDto> {
     return this.http.put<CarrelloDto>(`${this.base}/carrelli/${carrelloId}/configurazioni/${configurazioneId}`, {});
+  }
+
+  rimuoviVoceCarrello(carrelloId: number, voceId: number): Observable<CarrelloDto> {
+    return this.http.delete<CarrelloDto>(`${this.base}/carrelli/${carrelloId}/voci/${voceId}`);
   }
 
   profilo(): Observable<ProfiloUtenteDto> {
