@@ -141,11 +141,20 @@ header p {
   font-weight: 600;
 }
 
+
 .card-actions {
   display: flex;
   justify-content: space-between;
   align-items: center;
   gap: 12px;
+  flex-wrap: wrap;
+}
+
+.card-actions .main-actions {
+  display: flex;
+  gap: 12px;
+  align-items: center;
+  flex-wrap: wrap;
 }
 
 .card-actions button {
@@ -154,12 +163,29 @@ header p {
   padding: 10px 18px;
   font-weight: 600;
   cursor: pointer;
+  transition: transform .15s ease, box-shadow .2s ease;
+}
+
+.card-actions button.primary {
+  border: none;
   background: linear-gradient(135deg, #6366f1, #8b5cf6);
   color: #0f172a;
 }
 
-.card-actions button:hover {
+.card-actions button.primary:hover {
   transform: translateY(-1px);
+  box-shadow: 0 10px 24px rgba(99, 102, 241, .35);
+}
+
+.card-actions button.danger {
+  border: 1px solid rgba(248, 113, 113, .4);
+  background: rgba(248, 113, 113, .16);
+  color: #f87171;
+}
+
+.card-actions button.danger:hover {
+  transform: translateY(-1px);
+  background: rgba(248, 113, 113, .24);
 }
 
 .link {

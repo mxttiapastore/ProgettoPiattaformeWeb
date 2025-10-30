@@ -124,10 +124,10 @@ export class BuilderComponent implements OnInit, OnDestroy {
     this.api.getConfigurazione(this.configurazione.id).subscribe({
       next: conf => {
         this.configurazione = conf;
-        this.configurazioneMessaggio = 'Configurazione salvata! Trovi tutte le build nella sezione Configurazioni.';
+        this.configurazioneMessaggio = 'Configurazione correttamente salvata!';
       },
       error: () => {
-        this.configurazioneErrore = 'Non è stato possibile salvare la configurazione in questo momento.';
+        this.configurazioneErrore = 'Errore durante il salvataggio della configurazione.';
       }
     });
   }

@@ -127,6 +127,10 @@ export class ApiService {
     return this.http.get<ConfigurazioneDto[]>(`${this.base}/configurazioni`);
   }
 
+  deleteConfigurazione(id: number): Observable<void> {
+    return this.http.delete<void>(`${this.base}/configurazioni/${id}`);
+  }
+
   creaCarrello(): Observable<CarrelloDto> {
     return this.http.post<CarrelloDto>(`${this.base}/carrelli`, {});
   }
