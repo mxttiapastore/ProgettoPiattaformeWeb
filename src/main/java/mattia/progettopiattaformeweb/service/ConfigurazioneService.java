@@ -58,6 +58,12 @@ public class ConfigurazioneService {
                 .toList();
     }
 
+    @Transactional
+    public void elimina(Long id) {
+        var configurazione = confRepo.findById(id).orElseThrow();
+        confRepo.delete(configurazione);
+    }
+
     private ConfigurazioneDto toDto(Configurazione c) {
         var voci = c.getVoci().stream().map(v -> new VoceConfigurazioneDto(
                 v.getId(),
